@@ -2,11 +2,12 @@ pipeline {
     agent any
 
     stages {
+
         stage('Install Dependencies') {
             steps {
                 sh '''
-                pip install --upgrade pip
-                pip install -r requirements.txt
+                python3 -m pip install --upgrade pip
+                python3 -m pip install -r requirements.txt
                 '''
             }
         }
@@ -15,7 +16,7 @@ pipeline {
             steps {
                 sh '''
                 export PYTHONPATH=$PWD
-                pytest --cov=app --cov-report=xml tests/
+                python3 -m pytest --cov=app --cov-report=xml tests/
                 '''
             }
         }

@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        // Define common tool names matching your Jenkins Global Tool Configuration
-       // SCANNER_HOME = tool 'SonarScanner' 
-    }
-
     stages {
         stage('Checkout') {
             steps {

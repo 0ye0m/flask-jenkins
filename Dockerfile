@@ -1,20 +1,18 @@
-# Use lightweight Python image
-FROM python:3.11-slim
+FROM jenkins/jenkins:lts-jdk17-alpine
 
-# Set working directory inside container
-WORKDIR /app
+USER root
 
-# Copy dependency file first (better caching)
-COPY requirements.txt .
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-pip \
+    python3-venv \
+    git \
+    curl \
+    wget \
+    ca-certificates \
+    build-essential \
+    libssl-dev \
+    libffi-dev \
+&& rm -rf /var/lib/apt/lists/*
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copy application code
-COPY . .
-
-# Expose Flask port
-EXPOSE 5000
-
-# Run the Flask app
-CMD ["python", "app.py"]
+USER jenkins

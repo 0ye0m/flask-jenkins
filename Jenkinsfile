@@ -4,13 +4,31 @@ pipeline {
     stages {
 
         stage('Install Dependencies') {
-            steps {
-                sh '''
-                python3 -m pip install --upgrade pip
-                python3 -m pip install -r requirements.txt
-                '''
-            }
-        }
+    steps {
+        sh '''
+        set -e
+
+        apt-get update
+
+        apt-get install -y \
+            python3 \
+            python3-pip \
+            python3-venv \
+            build-essential \
+            git \
+            curl \
+            wget \
+            ca-certificates \
+            libssl-dev \
+            libffi-dev
+
+        python3 -m pip install --upgrade pip setuptools wheel
+        python3 -m pip install -r requirements.txt
+        '''
+    }
+}
+
+
 
         stage('Run Tests & Coverage') {
             steps {

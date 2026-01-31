@@ -8,12 +8,13 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Setup Virtualenv & Install Dependencies') {
             steps {
                 sh '''
-                python3 --version
-                pip3 install --upgrade pip
-                pip3 install -r requirements.txt
+                python3 -m venv venv
+                . venv/bin/activate
+                pip install --upgrade pip
+                pip install -r requirements.txt
                 '''
             }
         }
@@ -21,6 +22,7 @@ pipeline {
         stage('Run Tests & Coverage') {
             steps {
                 sh '''
+                . venv/bin/activate
                 pytest --cov=app --cov-report=xml tests/
                 '''
             }

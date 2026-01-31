@@ -24,12 +24,15 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'sonar-scanner'
-                }
-            }
+    steps {
+        withSonarQubeEnv('SonarQube') {
+            sh '''
+            sonar-scanner
+            '''
         }
+    }
+}
+
     }
 
     post {

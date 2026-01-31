@@ -2,6 +2,7 @@ pipeline {
     agent any
 
     stages {
+
         stage('Setup Virtualenv & Install Dependencies') {
             steps {
                 sh '''
@@ -24,14 +25,17 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
-    steps {
-        withSonarQubeEnv('SonarQube') {
-            sh 'sonar-scanner'
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''
+                    echo "Finding SonarScanner installation..."
+                    SCANNER_HOME=$(ls -d $JENKINS_HOME/tools/hudson.plugins.sonar.SonarRunnerInstallation/*)
+                    echo "Using SonarScanner at $SCANNER_HOME"
+                    $SCANNER_HOME/bin/sonar-scanner
+                    '''
+                }
+            }
         }
-    }
-}
-
-
     }
 
     post {

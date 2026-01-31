@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-        docker {
-            image 'python:3.10-slim'
-            args '-u root'
-        }
-    }
+    agent any
 
     stages {
         stage('Checkout') {
@@ -16,9 +11,9 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 sh '''
-                python --version
-                pip install --upgrade pip
-                pip install -r requirements.txt
+                python3 --version
+                pip3 install --upgrade pip
+                pip3 install -r requirements.txt
                 '''
             }
         }

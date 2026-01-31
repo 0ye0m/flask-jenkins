@@ -14,5 +14,8 @@ def status():
 def submit():
     data = request.form.get('student_name')
     if not data:
-        abort(400) # Bad Request
+        abort(400)  # Bad Request
     return jsonify(message=f"Received: {data}"), 201
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)

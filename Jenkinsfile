@@ -2,12 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Setup Virtualenv & Install Dependencies') {
             steps {
                 sh '''
@@ -23,6 +17,7 @@ pipeline {
             steps {
                 sh '''
                 . venv/bin/activate
+                export PYTHONPATH=$PWD
                 pytest --cov=app --cov-report=xml tests/
                 '''
             }
